@@ -14,11 +14,11 @@ var outer = function(){
 closure over the name variable. Invoke outer saving the return value into
 another variable called 'inner'. */
 
-// Code Here
+var inner = outer();
 
 //Once you do that, invoke inner.
 
-//Code Here
+inner();
 
 
 
@@ -47,7 +47,9 @@ var callFriend = function(){
 Create a makeCall function that when invoked logs 'Calling Jake at 435-215-9248'
 in your console. */
 
-  //Code Here
+  function makeCall(number) {
+    console.log("Calling " + friend + "at " + number);
+  }
 
 
 
@@ -66,14 +68,19 @@ in your console. */
 /* Write a function called makeCounter that makes the following code work
 properly. */
 
-//Code Here
+function makeCounter()  {
+  var number = 0;
+  return function() {
+    return ++number;
+  }
+}
 
-//Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+// Uncomment this once you make your function
+  var count = makeCounter();
+  count(); // 1
+  count(); // 2
+  count(); // 3
+  count(); // 4
 
 
 
@@ -96,11 +103,17 @@ function is responsible for decrementing the value by one. You will need to use
 the module pattern to achieve this. */
 
 function counterFactory(value) {
-
-  // Code here.
-
-
+  var total = value;
   return {
+    inc: function(addOne) {
+      return ++total;
+    },
+      dec: function(minusOne) {
+        return --total;
+      },
+      log: function() {
+        return total;
+      }
   }
 }
 
@@ -125,18 +138,15 @@ counter = counterFactory(10);
 will return 'You're doing awesome, keep it up firstname lastname.' */
 
 function motivation(firstname, lastname){
-
   var welcomeText = 'You\'re doing awesome, keep it up ';
-
-  // code message function here.
-
-
+  function message() {
+    return welcomeText += firstname + " " + lastname + ".";
+  }
   //Uncommment this to return the value of your invoked message function
-  //return message();
-
+  return message();
 }
 
-motivation('Billy', 'Bob'); // 'Your doing awesome keep it up Billy Bob
+motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob'
 
 
 
@@ -171,13 +181,15 @@ var module = (function() {
 	// outside our lexical scope
 
   return {
-    // Code here.
+    publicMethod: function() {
+      return privateMethod();
+    }
   };
 
 })();
 
 // Uncomment this after you create your public method
-//   module.publicMethod();
+  module.publicMethod();
 
 
 
@@ -200,13 +212,13 @@ then 3, etc). Run this code in your console to see what the output is. */
 // To make this code work you will need to create a new scope for every iteration.
 function timeOutCounter() {
   for (var i = 0; i <= 5; i++) {
-    setTimeout(function() {
-      console.log(i);
-    }, i * 1000)
+    newScope(i)
   }
 
   function newScope(i) {
-    console.log(i)
+    setTimeout(function() {
+      console.log(i);
+    }, i * 1000)
   }
 }
 timeOutCounter();
@@ -220,7 +232,14 @@ timeOutCounter();
 	#PROBLEM-08
 \******************************************************************************/
 
-var funcArray = [];
+var funcArray = [
+  function index0() {return 0},
+  function index1() {return 1},
+  function index2() {return 2},
+  function index3() {return 3},
+  function index4() {return 4},
+  function index5() {return 5},
+];
 
 /*
   Make the following code work
